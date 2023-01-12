@@ -2,6 +2,7 @@ const express=require('express');
 const router = require('./src/routes/api');
 
 const app = new express();
+const bodyParser = require('body-parser')
 
 
 //security Middleware
@@ -13,12 +14,18 @@ const hpp = require('hpp')
 const cors = require('cors')
 const mongoose = require('mongoose')
 
+
+mongoose.set('strictQuery', false);
+
+
 //Security Middleware Implement
 app.use(cors())
 app.use(helmet())
 app.use(mongoSanitize())
 app.use(xss())
 app.use(hpp())
+
+app.use(bodyParser.json());
 
 //Request rate limiting
 const limiter = rateLimit({
